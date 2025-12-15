@@ -4,7 +4,6 @@ import NetworkManager
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import model.AuthResponse
-import model.LoginRequest
 import model.RegisterRequest
 import model.User
 import token.TokenProvider
@@ -37,17 +36,22 @@ class AuthRepositoryImpl(
         phone: String,
         password: String,
     ): Flow<Result<User>> {
-        return networkManager.post<LoginRequest, AuthResponse>(
-            endpoint = "auth/login",
-            body = LoginRequest(phone, password)
-        ).map { result ->
-            result.map { (token, user) ->
-                tokenProvider.setToken(token)
-                userRepository.setUserInfo(user)
-                user
-            }.onFailure {
-                tokenProvider.clearToken()
-            }
-        }
+//        return networkManager.post<LoginRequest, AuthResponse>(
+//            endpoint = "auth/login",
+//            body = LoginRequest(phone, password)
+//        ).map { result ->
+//            result.map { (token, user) ->
+//                tokenProvider.setToken(token)
+//                userRepository.setUserInfo(user)
+//                user
+//            }.onFailure {
+//                tokenProvider.clearToken()
+//            }
+//        }
+        val user = User(id = 1, phone, password)
+        tokenProvider.setToken(accessToken = "")
+        userRepository.setUserInfo(user)
+
+        return kotlinx.coroutines.flow.flowOf(Result.success(user))
     }
 }

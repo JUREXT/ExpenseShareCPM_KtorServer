@@ -1,4 +1,3 @@
-import io.kotzilla.gradle.ext.KotzillaKeyGeneration
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
@@ -12,18 +11,19 @@ plugins {
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.composeHotReload)
     alias(libs.plugins.jacoco)
-    alias(libs.plugins.kotzilla)
+    // alias(libs.plugins.kotzilla) // Disabled - no key available
 }
 
 jacoco {
     toolVersion = libs.versions.jacoco.get()
 }
 
-kotzilla  {
-    versionName = "1.0"
-    keyGeneration = KotzillaKeyGeneration.COMPOSE
-    composeInstrumentation = true
-}
+// Kotzilla configuration disabled
+// kotzilla  {
+//     versionName = "1.0"
+//     keyGeneration = KotzillaKeyGeneration.COMPOSE
+//     composeInstrumentation = true
+// }
 
 kotlin {
     androidTarget {
@@ -69,7 +69,7 @@ kotlin {
             implementation(libs.koin.android)
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
-            implementation(libs.kotzilla.sdk.compose)
+            // implementation(libs.kotzilla.sdk.compose) // Disabled - no key available
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -103,7 +103,7 @@ kotlin {
             implementation(libs.kotlinx.coroutines.swing)
         }
         iosMain.dependencies {
-            implementation(libs.kotzilla.sdk.compose)
+            // implementation(libs.kotzilla.sdk.compose) // Disabled - no key available
         }
 
     }
